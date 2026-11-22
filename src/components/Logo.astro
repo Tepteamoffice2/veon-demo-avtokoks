@@ -1,0 +1,20 @@
+---
+// Typographic vector stand-in for the Авто-Кокс mark (white lowercase "авто кокс" on the red square, the "о" as a gear),
+// drawn after audit/screens-desktop/home-desktop-fold.png. The client's own vector file replaces it in FULL.
+const cx = 76, cy = 33, teeth = 8, rOut = 12.5, rIn = 9.8, hole = 5;
+const pts: string[] = [];
+for (let i = 0; i < teeth * 2; i++) {
+  const r = i % 2 === 0 ? rOut : rIn;
+  const a0 = (Math.PI * 2 * i) / (teeth * 2) - 0.13;
+  const a1 = (Math.PI * 2 * (i + 1)) / (teeth * 2) - 0.13;
+  pts.push(`${(cx + r * Math.cos(a0)).toFixed(2)},${(cy + r * Math.sin(a0)).toFixed(2)}`);
+  pts.push(`${(cx + r * Math.cos(a1)).toFixed(2)},${(cy + r * Math.sin(a1)).toFixed(2)}`);
+}
+const gear = `M${pts.join("L")}Z M${cx + hole},${cy} a${hole},${hole} 0 1,0 ${-hole * 2},0 a${hole},${hole} 0 1,0 ${hole * 2},0Z`;
+---
+<svg class="logo-mark" viewBox="0 0 100 100" role="img" aria-label="Авто-Кокс">
+  <rect class="logo-mark__bg" width="100" height="100" />
+  <text class="logo-mark__word" x="12" y="46" textLength="49" lengthAdjust="spacingAndGlyphs">авт</text>
+  <path class="logo-mark__gear" d={gear} fill-rule="evenodd" />
+  <text class="logo-mark__word" x="12" y="82" textLength="77" lengthAdjust="spacingAndGlyphs">кокс</text>
+</svg>

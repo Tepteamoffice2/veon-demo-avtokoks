@@ -1,0 +1,71 @@
+---
+// Signature: a generic sedan in side view (no make, no badge) with the 14 catalog groups as numbered callouts.
+// Own line drawing; numbers match the list in #katalog. Hover or focus on a list row lights its node (site.ts).
+import { groups } from "../data/site";
+
+type Node = { n: string; x: number; y: number; lx: number; row: "top" | "bottom" };
+const nodes: Node[] = [
+  { n: "01", x: 210, y: 262, lx: 232, row: "bottom" },
+  { n: "02", x: 212, y: 208, lx: 280, row: "top" },
+  { n: "03", x: 275, y: 234, lx: 312, row: "bottom" },
+  { n: "04", x: 338, y: 152, lx: 400, row: "top" },
+  { n: "05", x: 165, y: 230, lx: 152, row: "bottom" },
+  { n: "06", x: 98, y: 222, lx: 96, row: "bottom" },
+  { n: "07", x: 68, y: 238, lx: 40, row: "bottom" },
+  { n: "08", x: 300, y: 158, lx: 340, row: "top" },
+  { n: "09", x: 555, y: 232, lx: 560, row: "bottom" },
+  { n: "10", x: 196, y: 190, lx: 220, row: "top" },
+  { n: "11", x: 520, y: 212, lx: 520, row: "top" },
+  { n: "12", x: 150, y: 196, lx: 160, row: "top" },
+  { n: "13", x: 70, y: 209, lx: 40, row: "top" },
+  { n: "14", x: 122, y: 196, lx: 100, row: "top" },
+];
+const leader = (d: Node) => {
+  const end = d.row === "top" ? 58 : 330;
+  return `M${d.x} ${d.y}L${d.lx} ${end}`;
+};
+const labelY = (d: Node) => (d.row === "top" ? 46 : 362);
+const order = [...nodes].sort((a, b) => a.n.localeCompare(b.n));
+---
+<svg class="diagram car-drawing" viewBox="0 0 800 380" role="img" aria-label={`Схема автомобіля: де розташовані 14 груп деталей — ${groups.join(", ")}`}>
+  <g class="cd-body">
+    <path d="M62 256L52 222Q50 200 72 196L200 180L282 168L360 108Q368 100 382 100L548 100Q562 100 572 110L640 168L728 178Q750 182 752 200L756 244Q756 256 744 256L694 256A52 52 0 0 0 590 256L262 256A52 52 0 0 0 158 256Z" />
+    <path d="M300 168L366 114L452 112V168ZM464 112H546L600 166L464 168Z" />
+    <path d="M300 168V250M458 112V252M606 170V248M420 188H440M570 188H590M282 172H640" />
+    <path d="M56 206L86 202L88 214L58 216ZM742 190L754 192L755 210L744 208Z" />
+    <circle cx="210" cy="262" r="44" />
+    <circle cx="210" cy="262" r="30" />
+    <circle cx="210" cy="262" r="9" />
+    <circle cx="642" cy="262" r="44" />
+    <circle cx="642" cy="262" r="30" />
+    <circle cx="642" cy="262" r="9" />
+  </g>
+  <g class="cd-hidden">
+    <rect x="62" y="214" width="12" height="36" />
+    <circle cx="98" cy="222" r="10" />
+    <circle cx="118" cy="238" r="7" />
+    <path d="M90 228L113 243M106 216L124 233" />
+    <rect x="108" y="200" width="92" height="48" />
+    <path d="M136 192V200M150 192V200M164 192V200M178 192V200" />
+    <rect x="118" y="190" width="9" height="10" />
+    <rect x="176" y="184" width="40" height="12" />
+    <path d="M206 196L218 200L206 205L218 210L206 214L218 218" />
+    <rect x="250" y="222" width="52" height="24" />
+    <ellipse cx="338" cy="152" rx="6" ry="18" />
+    <path d="M336 166L304 206M286 166L322 150" />
+    <rect x="520" y="220" width="70" height="24" />
+  </g>
+  {nodes.map((d) => (
+    <g class="cd-node" data-node={d.n}>
+      <path class="cd-leader" d={leader(d)} />
+      <circle class="cd-point" cx={d.x} cy={d.y} r="3.5" />
+      <g class="cd-hl">
+        <path class="cd-hl-leader" d={leader(d)} />
+        <circle class="cd-hl-ring" cx={d.x} cy={d.y} r="13" />
+      </g>
+      <g class="cd-num-g" data-reveal style={`--reveal-delay:${order.indexOf(d) * 30}ms`}>
+        <text class="cd-num" x={d.lx} y={labelY(d)} text-anchor="middle">{d.n}</text>
+      </g>
+    </g>
+  ))}
+</svg>

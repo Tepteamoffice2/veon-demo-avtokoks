@@ -1,0 +1,234 @@
+---
+// Homepage of the Авто-Кокс demo: design/concept.md («Червоний квадрат і креслення»), ux/demo-home.md.
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FutureLink from "../components/FutureLink.astro";
+import FutureNotice from "../components/FutureNotice.astro";
+import WheelDrawing from "../components/WheelDrawing.astro";
+import CarDrawing from "../components/CarDrawing.astro";
+import { phones, hours, email, address, mapHref, vinMailto, models, groups, notes, youtube } from "../data/site";
+
+const title = "Автозапчастини Daewoo, Chevrolet, ВАЗ в Одесі | Авто-Кокс";
+const description = "Запчастини для Lanos, Aveo, Lacetti, ВАЗ та іномарок — зі складу в Одесі й під замовлення за VIN. Доставка по Україні, оплата при отриманні.";
+
+const ld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AutoPartsStore",
+      name: "Авто-Кокс",
+      telephone: ["+380661163311", "+380680734797"],
+      email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Дніпропетровська дорога, 123",
+        addressLocality: "Одеса",
+        addressCountry: "UA",
+      },
+      openingHours: "Mo-Su 09:00-21:00",
+      areaServed: "UA",
+      foundingDate: "2010",
+      sameAs: [youtube],
+    },
+    { "@type": "WebSite", name: "Авто-Кокс", inLanguage: "uk" },
+  ],
+};
+
+const vinGroups = [
+  { from: 1, to: 3, label: "1–3", text: "виробник" },
+  { from: 4, to: 9, label: "4–9", text: "модель і двигун" },
+  { from: 10, to: 10, label: "10", text: "рік випуску" },
+  { from: 11, to: 17, label: "11–17", text: "завод і серійний номер" },
+];
+---
+<Base lang="uk" title={title} description={description} rec="SEO-R001,SEO-R002,SEO-R009,SEO-R012,P-R008,P-R002" bodyRec="P-R006,P-R009">
+  <script slot="head" type="application/ld+json" data-rec="SEO-R003" set:html={JSON.stringify(ld)} />
+  <Header slot="header" />
+
+  <Section id="hero" class="hero" rec="U-R002,U-R003,U-R006,SEO-R002,M-R005">
+    <div class="container hero__grid">
+      <div class="hero__square on-red">
+        <h1 class="hero__title">Автозапчастини Daewoo, Chevrolet і ВАЗ в Одесі</h1>
+        <p class="hero__lead">Зі складу в Одесі та під замовлення за VIN. Наявність і сумісність підтвердить менеджер.</p>
+        <div class="hero__actions">
+          <a class="btn btn--light btn--lg nowrap" style="white-space:nowrap" href={phones[0].href}>Зателефонувати {phones[0].label}</a>
+          <p class="hero__more">
+            <a class="link-on-red" href={phones[1].href}>{phones[1].label}</a>
+            <span class="hero__hours">{hours}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="hero__side">
+        <div class="hero__drawing">
+          <WheelDrawing />
+          <a class="callout callout--02" href="#katalog"><span class="callout__n">02</span>Підвіска та ходова</a>
+          <a class="callout callout--01" href="#katalog"><span class="callout__n">01</span>Гальмівна система</a>
+        </div>
+
+        <div class="picker" role="group" aria-label="Підбір запчастин за авто" data-rec="P-R010">
+          <span class="picker__word">Підібрати</span>
+          <FutureLink class="picker__gap" note={notes.picker}>групу деталей</FutureLink>
+          <span class="picker__word">для</span>
+          <FutureLink class="picker__gap" note={notes.picker}>марка</FutureLink>
+          <FutureLink class="picker__gap" note={notes.picker}>модель</FutureLink>
+          <FutureLink class="picker__gap" note={notes.picker}>об'єм</FutureLink>
+          <FutureLink class="btn btn--outline picker__go" note={notes.picker}>Підібрати</FutureLink>
+        </div>
+        <FutureLink class="btn btn--outline btn--block picker-mobile" note={notes.picker}>Підібрати за авто</FutureLink>
+
+        <div class="models" role="group" aria-labelledby="models-label">
+          <p class="models__label" id="models-label">Популярні моделі</p>
+          <ul class="models__list">
+            {models.map((m) => <li><FutureLink class="chip" note={notes.picker}>{m}</FutureLink></li>)}
+          </ul>
+        </div>
+
+        <a class="vin-link" href="#pid-zamovlennia">Немає вашого авто? Підберемо за VIN</a>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="katalog" class="katalog" rec="U-R015,U-R008">
+    <div class="container katalog__grid">
+      <h2 class="h2 katalog__title">Каталог запчастин: 14 груп</h2>
+      <div class="katalog__figure" data-car>
+        <CarDrawing />
+      </div>
+      <div class="katalog__side">
+        <div class="article-search">
+          <p class="article-search__label" id="article-label">Знаєте артикул?</p>
+          <FutureLink class="field-sample" note={notes.search}>наприклад, KYB 365501</FutureLink>
+        </div>
+        <ol class="groups">
+          {groups.map((g, i) => {
+            const n = String(i + 1).padStart(2, "0");
+            return (
+              <li>
+                <FutureLink class="groups__item" node={n} note={notes.catalog}>
+                  <span class="groups__n">{n}</span><span class="groups__name">{g}</span>
+                </FutureLink>
+              </li>
+            );
+          })}
+        </ol>
+        <FutureLink class="btn btn--outline groups__all" note={notes.catalog}>Весь каталог</FutureLink>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="pid-zamovlennia" class="vin" rec="U-R011">
+    <div class="container vin__grid">
+      <div class="vin__text">
+        <h2 class="h2">Іномарка під замовлення за VIN</h2>
+        <p class="vin__lead">Готові дістати будь-яку запчастину, якої немає на складі. VIN-код допоможе не помилитися з деталлю.</p>
+        <ol class="steps">
+          <li><span class="steps__n">1</span>Надішліть VIN і назву деталі або зателефонуйте.</li>
+          <li><span class="steps__n">2</span>Менеджер уточнить деталь і передзвонить.</li>
+          <li><span class="steps__n">3</span>Доставка під замовлення: 2–3 дні.</li>
+        </ol>
+        <div class="vin__actions">
+          <a class="btn btn--primary" href={phones[0].href}>Зателефонувати</a>
+          <a class="btn btn--outline" href={vinMailto}>Надіслати VIN на e-mail</a>
+        </div>
+      </div>
+      <figure class="vin-code">
+        <div class="vin-code__cells" aria-hidden="true">
+          {Array.from({ length: 17 }, () => <span class="vin-code__cell"></span>)}
+        </div>
+        <ul class="vin-code__legend">
+          {vinGroups.map((g) => (
+            <li class:list={["vin-code__mark", { "vin-code__mark--end": g.from >= 10 }]} style={`--from:${g.from};--to:${g.to}`}>
+              <b class="vin-code__num">{g.label}</b> {g.text}
+            </li>
+          ))}
+        </ul>
+        <figcaption class="vin-code__caption">VIN-код із 17 знаків є у свідоцтві про реєстрацію авто.</figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <Section id="yak-zamovyty" class="route" rec="U-R010,U-R003">
+    <div class="container">
+      <h2 class="h2">Від дзвінка до посилки: Нова пошта, Ін-тайм, Авто-люкс або самовивіз в Одесі</h2>
+      <ol class="route__line">
+        <li class="route__step">
+          <h3 class="route__title">Дзвінок</h3>
+          <p>Зателефонуйте на будь-який із двох номерів магазину.</p>
+        </li>
+        <li class="route__step">
+          <h3 class="route__title">Підтвердження</h3>
+          <p>Менеджер передзвонює й підтверджує наявність і сумісність.</p>
+        </li>
+        <li class="route__step route__step--fork">
+          <h3 class="route__title">Доставка або самовивіз</h3>
+          <ul class="route__fork">
+            <li>По всій Україні: Нова пошта, Ін-тайм, Авто-люкс</li>
+            <li>Самовивіз в Одесі</li>
+          </ul>
+        </li>
+        <li class="route__step">
+          <h3 class="route__title">Оплата</h3>
+          <p>При отриманні або на картку ПриватБанку.</p>
+        </li>
+        <li class="route__step">
+          <h3 class="route__title">Повернення</h3>
+          <p>Протягом 14 днів.</p>
+        </li>
+      </ol>
+      <div class="route__end">
+        <a class="btn btn--primary nowrap" style="white-space:nowrap" href={phones[0].href}>Зателефонувати {phones[0].label}</a>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="chomu-my" class="trust" rec="U-R009">
+    <div class="container trust__grid">
+      <p class="trust__year"><span class="trust__num">2010</span><span class="trust__cap">рік, з якого Авто-Кокс продає автозапчастини</span></p>
+      <div class="trust__facts">
+        <h2 class="h2">З 2010 року — запчастини для ВАЗ, Daewoo і Chevrolet</h2>
+        <ul class="facts">
+          <li><span class="facts__head">Спеціалізація</span>запчастини для вітчизняних авто та Daewoo, Chevrolet</li>
+          <li><span class="facts__head">Іномарки</span>під замовлення за VIN-кодом, доставка 2–3 дні</li>
+          <li><span class="facts__head">Гарантійні зобов'язання</span>гарантія на весь товар</li>
+          <li><span class="facts__head">Знижки</span>гнучка система знижок для постійних клієнтів</li>
+          <li>
+            <span class="facts__head">Сертифікати якості</span>
+            <span>обов'язкова сертифікація товару</span>
+            <FutureLink class="text-link" note={notes.section}>Переглянути сертифікати</FutureLink>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="kontakty" class="contacts" rec="U-R012">
+    <div class="container contacts__grid">
+      <div class="contacts__square on-red">
+        <h2 class="h2 contacts__title">Контакти магазину в Одесі</h2>
+        <ul class="contacts__phones">
+          {phones.map((p) => <li><a class="contacts__phone" href={p.href}>{p.label}</a></li>)}
+        </ul>
+        <p class="contacts__hours">{hours}</p>
+      </div>
+      <div class="contacts__side">
+        <div class="contacts__item">
+          <h3 class="contacts__head">Адреса</h3>
+          <p class="contacts__value">{address}</p>
+          <p class="contacts__note">Самовивіз для жителів Одеси.</p>
+          <a class="text-link" href={mapHref} target="_blank" rel="noopener">Маршрут на мапі</a>
+        </div>
+        <div class="contacts__item">
+          <h3 class="contacts__head">E-mail</h3>
+          <a class="text-link contacts__mail" href={`mailto:${email}`}>{email}</a>
+          <p class="contacts__note">Для запиту за VIN: VIN-код, марка й модель, назва деталі.</p>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+  <FutureNotice slot="footer" />
+</Base>

@@ -1,0 +1,27 @@
+---
+// A future page or function that is not built in the demo yet (menu item, picker, chip, catalog group, footer link).
+// Renders an inactive element with a short note instead of a link: never point it to the client's current site.
+// Hover/focus shows `note`; a click, Enter or Space opens the shared notice (FutureNotice.astro) with `message`
+// and a real call button, so the visitor is never left at a dead end.
+interface Props {
+  note?: string;
+  message?: string;
+  class?: string;
+  node?: string;
+  rec?: string;
+}
+const { note = "Розділ у розробці", message, class: cls, node, rec } = Astro.props;
+---
+<span
+  class:list={["future-link", cls]}
+  role="link"
+  aria-disabled="true"
+  tabindex="0"
+  data-message={message ?? note}
+  data-node={node}
+  data-rec={rec}
+>
+  <slot />
+  <span class="future-link__note" aria-hidden="true">{note}</span>
+  <span class="visually-hidden">({note})</span>
+</span>

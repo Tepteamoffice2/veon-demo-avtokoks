@@ -1,0 +1,59 @@
+---
+// Exploded wheel assembly (hero, >=1024px). Own line drawing, no stock. Rendered twice with one geometry:
+// the part left of x=90 lies over the red square and is drawn white, the rest graphite (concept.md 8.3).
+const coil = Array.from({ length: 6 }, (_, i) => 40 + i * 34);
+const bolts = Array.from({ length: 5 }, (_, i) => {
+  const a = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+  return { x: 290 + 34 * Math.cos(a), y: 165 + 34 * Math.sin(a) };
+});
+const layers = [
+  { cls: "on-square", clip: "wd-clip-in" },
+  { cls: "off-square", clip: "wd-clip-out" },
+];
+---
+<svg class="diagram wheel-drawing" viewBox="0 0 640 330" role="img" aria-label="Схема: розібраний вузол колеса — пружина й амортизатор, гальмівний диск, колодки, супорт">
+  <defs>
+    <clipPath id="wd-clip-in"><rect x="-240" y="-60" width="330" height="450" /></clipPath>
+    <clipPath id="wd-clip-out"><rect x="90" y="-60" width="800" height="450" /></clipPath>
+  </defs>
+  {layers.map((layer) => (
+    <g class={`wd-layer wd-layer--${layer.cls}`} clip-path={`url(#${layer.clip})`}>
+      <g class="wd-axis">
+        <path d="M150 165H630M290 28V302" />
+      </g>
+      <g class="wd-leaders">
+        <path d="M113 57 160 22H198" />
+        <path d="M382 242 428 298H458" />
+      </g>
+      <g class="wd-part wd-part--coil">
+        <rect x="48" y="22" width="64" height="8" />
+        <path d="M77 30V150M83 30V150" />
+        <rect x="68" y="150" width="24" height="150" />
+        <circle cx="80" cy="308" r="8" />
+        <rect x="36" y="244" width="88" height="6" />
+        {coil.map((y) => <path d={`M45 ${y} 115 ${y + 17}`} />)}
+        {coil.map((y) => <path class="wd-hidden" d={`M115 ${y + 17} 45 ${y + 34}`} />)}
+      </g>
+      <g class="wd-part wd-part--disc">
+        <circle cx="290" cy="165" r="120" />
+        <circle cx="290" cy="165" r="108" />
+        <circle cx="290" cy="165" r="52" />
+        <circle cx="290" cy="165" r="20" />
+        {bolts.map((b) => <circle cx={b.x.toFixed(1)} cy={b.y.toFixed(1)} r="6" />)}
+      </g>
+      <g class="wd-part wd-part--pads">
+        <rect x="440" y="95" width="22" height="140" />
+        <rect class="wd-hidden" x="446" y="106" width="10" height="118" />
+        <rect x="476" y="95" width="22" height="140" />
+        <rect class="wd-hidden" x="482" y="106" width="10" height="118" />
+      </g>
+      <g class="wd-part wd-part--caliper">
+        <path d="M525 90 600 70Q615 70 615 85V245Q615 260 600 260L525 240Z" />
+        <circle class="wd-hidden" cx="570" cy="165" r="28" />
+        <rect x="588" y="56" width="10" height="14" />
+        <circle cx="556" cy="88" r="7" />
+        <circle cx="556" cy="242" r="7" />
+      </g>
+    </g>
+  ))}
+</svg>

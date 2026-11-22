@@ -1,0 +1,16 @@
+---
+// Shared notice for FutureLink: says the function comes in the full version and offers the real call.
+// Closed by the cross and by Esc; focus returns to the element that opened it (site.ts).
+import Icon from "./Icon.astro";
+import { phones } from "../data/site";
+---
+<div class="notice" role="dialog" aria-modal="false" aria-labelledby="notice-text" hidden data-notice>
+  <p class="notice__text" id="notice-text" data-notice-text>Розділ у розробці</p>
+  <p class="notice__hint">Поки що підберемо деталь телефоном: {phones[0].label}.</p>
+  <div class="notice__actions">
+    <a class="btn btn--primary" href={phones[0].href}>Зателефонувати</a>
+  </div>
+  <button class="notice__close icon-btn" type="button" data-notice-close>
+    <Icon name="close" /><span class="visually-hidden">Закрити</span>
+  </button>
+</div>

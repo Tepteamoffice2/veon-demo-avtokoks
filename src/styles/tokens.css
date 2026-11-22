@@ -1,0 +1,77 @@
+/* Hallmark · shape: square-and-drawing · genre: editorial · theme: custom · job: buy (call) · idea: "червоний квадрат логотипа говорить, розібране креслення показує деталь" · vibe: "червоний квадрат, сталь, креслення, телефон"
+ * paper: #F2F3F4 · accent: #C62828 · display: Alumni Sans · body: Fira Sans · hero: red square with H1 and call button, exploded wheel assembly crossing its edge, sentence picker below · nav: light sticky, logo square flush left, anchors, phone right · footer: light, contacts and catalog columns · imagery: line drawings (no photos) · signature: car exploded into 14 numbered catalog nodes
+ * axes: light/display-condensed/warm · posture: committed · surface: absolute · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H5 E4 S5 R4 V4 · weakest: E, the hero carries picker, models and VIN line by the approved UX; kept them one quiet step below the square so the call stays first */
+/* Hallmark · waive 7b · --color-surface is #FFFFFF · concept.md 8.4 fixes pure white as the drawing surface and the text on red (approved palette) */
+/* Hallmark · waive 80 · the car and the wheel assembly are labelled diagrams (class="diagram", aria-label) of the catalog groups · concept.md signature: the drawing is the catalog navigation */
+/* Hallmark · waive 23 · red covers about a third of the first screen · concept.md 8.6 posture committed: the logo square grows into the hero square, red is the brand voice */
+/* Hallmark · waive 44c · the drawing sits above the picker in the right column and crosses the square's edge · custom hero composition, concept.md 8.3 */
+/* Hallmark · answered F4 · the light button is the primary's inverse inside the red square; the red phone icon is the same call in the mobile header */
+/* Hallmark · answered F19 · weights from concept.md 8.5: Fira Sans 400/500, Alumni Sans 700/800 (900 only for the 2010 figure) */
+/* Client design tokens from design/concept.md (veon-concept: colors, fonts). One token system for the whole page. */
+:root {
+  /* Colour (concept.md 8.4) */
+  --color-bg: #F2F3F4;
+  --color-surface: #FFFFFF;
+  --color-text: #17191C;
+  --color-text-2: #4B5159;
+  --color-line: #7B838C;
+  --color-rule: #C9CDD1;
+  --color-accent: #C62828;
+  --color-accent-press: #A51F1F;
+  --color-on-accent: #FFFFFF;
+  --color-accent-ink: #FFFFFF;
+  --color-on-accent-2: #FFE3E1;
+  --color-focus: #17191C;
+  --color-focus-on-accent: #FFFFFF;
+
+  /* Type (concept.md 8.5) */
+  --font-display: "Alumni Sans Variable", "Arial Narrow", sans-serif;
+  --font-body: "Fira Sans", "Segoe UI", system-ui, sans-serif;
+  --text-h1: clamp(44px, 15.5cqi, 88px);
+  --text-h2: clamp(36px, 28.6px + 1.9vw, 56px);
+  --text-h3: clamp(24px, 21px + 0.76vw, 32px);
+  --text-lead: clamp(17px, 15.9px + 0.29vw, 20px);
+  --text-body: clamp(16px, 15.6px + 0.1vw, 17px);
+  --text-small: 15px;
+  --text-year: clamp(120px, 50cqi, 300px);
+  --text-phone: clamp(36px, 14cqi, 80px);
+  --text-btn: clamp(15px, 14px + 0.3vw, 17px);
+  --text-num: clamp(22px, 20px + 0.4vw, 26px);
+
+  /* Space: rhythm of 8 (concept.md 8.6) */
+  --space-0: 0;
+  --space-half: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 104px;
+  --pad-square: clamp(24px, 3.3vw, 48px);
+  --section-gap: clamp(64px, 50px + 3.8vw, 104px);
+
+  /* Grid */
+  --space: clamp(20px, 4vw, 80px);
+  --gutter: clamp(16px, 13px + 0.8vw, 24px);
+  --container: 1280px;
+  --header-h: 56px;
+  --control-h: 48px;
+  --control-h-lg: 52px;
+  --radius: 0;
+  --line: 1.5px;
+
+  /* Motion (concept.md 8.7) */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in: cubic-bezier(.5, 0, .75, 0);
+  --dur-micro: 120ms;
+  --dur-short: 200ms;
+  --dur-hl: 240ms;
+  --dur-explode: 800ms;
+  --dur: 300ms;
+  --z-header: 50;
+  --z-notice: 60;
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 72px; }
+}

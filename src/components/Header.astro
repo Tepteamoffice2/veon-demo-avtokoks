@@ -1,0 +1,43 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { nav, phones, hours } from "../data/site";
+---
+<header class="site-header" data-rec="U-R001,U-R002">
+  <div class="site-header__in">
+    <a class="site-header__logo" href="#top"><Logo /><span class="visually-hidden">На початок сторінки</span></a>
+    <nav class="site-nav" aria-label="Розділи сторінки">
+      <ul class="site-nav__list">
+        {nav.map((item) => <li><a class="site-nav__link" href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="site-header__contact">
+      <span class="site-header__phones">
+        <a class="site-header__phone nowrap" href={phones[0].href}>{phones[0].label}</a>
+        <a class="site-header__phone site-header__phone--2 nowrap" href={phones[1].href}>{phones[1].label}</a>
+      </span>
+      <span class="site-header__hours">{hours}</span>
+    </div>
+    <div class="site-header__tools">
+      <a class="icon-btn icon-btn--call" style="white-space:nowrap" href={phones[0].href}>
+        <Icon name="phone" /><span class="visually-hidden nowrap">Зателефонувати {phones[0].label}</span>
+      </a>
+      <details class="menu" data-menu>
+        <summary class="icon-btn icon-btn--menu">
+          <span class="menu__open"><Icon name="menu" /></span>
+          <span class="menu__close"><Icon name="close" /></span>
+          <span class="visually-hidden">Меню</span>
+        </summary>
+        <div class="menu__panel">
+          <ul class="menu__list">
+            {nav.map((item) => <li><a class="menu__link" href={item.href}>{item.label}</a></li>)}
+          </ul>
+          <div class="menu__phones">
+            {phones.map((p) => <a class="menu__phone" href={p.href}>{p.label}</a>)}
+            <p class="menu__hours">{hours}</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

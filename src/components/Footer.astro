@@ -1,0 +1,40 @@
+---
+import Logo from "./Logo.astro";
+import FutureLink from "./FutureLink.astro";
+import { phones, hours, email, address, youtube, nav, groups, notes } from "../data/site";
+---
+<footer class="site-footer" data-rec="U-R012">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <a class="site-footer__logo" href="#top"><Logo /><span class="visually-hidden">На початок сторінки</span></a>
+      <p class="site-footer__line">Інтернет-магазин автозапчастин для легкових авто: зі складу та під замовлення.</p>
+    </div>
+    <div class="site-footer__col">
+      <h2 class="site-footer__head">Зв'язок</h2>
+      <ul class="site-footer__list">
+        {phones.map((p) => <li><a class="site-footer__link" href={p.href}>{p.label}</a></li>)}
+        <li><a class="site-footer__link" href={`mailto:${email}`}>{email}</a></li>
+        <li class="site-footer__text">{address}</li>
+        <li class="site-footer__text">{hours}</li>
+      </ul>
+    </div>
+    <div class="site-footer__col site-footer__col--wide">
+      <h2 class="site-footer__head">Каталог</h2>
+      <ul class="site-footer__list site-footer__list--two">
+        {groups.map((g) => <li><FutureLink class="site-footer__future" note={notes.catalog}>{g}</FutureLink></li>)}
+      </ul>
+    </div>
+    <div class="site-footer__col">
+      <h2 class="site-footer__head">Сторінка</h2>
+      <ul class="site-footer__list">
+        {nav.map((item) => <li><a class="site-footer__link" href={item.href}>{item.label}</a></li>)}
+        <li><FutureLink class="site-footer__future" note={notes.section}>Блог</FutureLink></li>
+        <li><a class="site-footer__link" href={youtube} target="_blank" rel="noopener">YouTube: Авто Кокс</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container site-footer__base">
+    <p>© 2026 Авто-Кокс</p>
+    <FutureLink class="site-footer__future" note={notes.section}>Політика конфіденційності</FutureLink>
+  </div>
+</footer>
